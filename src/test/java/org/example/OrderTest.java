@@ -1,5 +1,6 @@
 package org.example;
 
+import io.qameta.allure.Description;
 import io.qameta.allure.Step;
 import io.restassured.response.Response;
 import org.example.models.responses.*;
@@ -19,18 +20,18 @@ public class OrderTest {
     public CourierApi courierApi = new CourierApi();
     public OrderApi orderApi = new OrderApi();
 
-    public static final String login = "SunkarSunkarCourier";
-    public static final  String password = "12345";
+    public static final String LOGIN = "SunkarSunkarCourier";
+    public static final  String PASSWORD = "12345";
 
-    public static final String firstName = "Sunkar";
-    public static final String lastName = "Sunkarov";
-    public static final String address = "Гагарина 135И";
-    public static final int metroStation = 12;
-    public static final String phone = "+7 747 144 21 10";
-    public static final int rentTime = 5;
-    public static final String deliveryDate = "2024-10-30";
-    public static final String comment = "Тест коммент";
-    public static final List<String> color = List.of("BLACK");
+    public static final String FIRST_NAME = "Sunkar";
+    public static final String LAST_NAME = "Sunkarov";
+    public static final String ADDRESS = "Гагарина 135И";
+    public static final int METRO_STATION = 12;
+    public static final String PHONE = "+7 747 144 21 10";
+    public static final int RENT_TIME = 5;
+    public static final String DELIVERY_DATE = "2024-10-30";
+    public static final String COMMENT = "Тест коммент";
+    public static final List<String> COLOR = List.of("BLACK");
 
 
 
@@ -41,6 +42,8 @@ public class OrderTest {
             "GRAY",
             "BLACK and GRAY"
     })
+    @Step("Тест создания заказа с двумя цветами.")
+    @Description("Этот тест проверяет создание заказа с двумя цветами.")
     @EmptySource
     public void testCreateOrderWithTwoColors(String colorElement) {
         List<String> color = new ArrayList<>();
@@ -49,15 +52,15 @@ public class OrderTest {
             color.addAll(Arrays.asList(colors));
         }
         Response response = orderApi.createOrder(
-                firstName,
-                lastName,
-                address,
-                metroStation,
-                phone,
-                rentTime,
-                deliveryDate,
-                comment,
-                color
+                FIRST_NAME,
+                LAST_NAME,
+                ADDRESS,
+                METRO_STATION,
+                PHONE,
+                RENT_TIME,
+                DELIVERY_DATE,
+                COMMENT,
+                COLOR
         );
         assertEquals(201, response.statusCode());
 
@@ -66,16 +69,18 @@ public class OrderTest {
     }
 
     @Test
+    @Step("Тест получения списка заказов.")
+    @Description("Этот тест проверяет получение списка заказов.")
     public void testGetOrderList() {
         // Создание курьера
-        Response responseCourier = courierApi.createCourier(login, password, firstName);
+        Response responseCourier = courierApi.createCourier(LOGIN, PASSWORD, FIRST_NAME);
         assertEquals(201, responseCourier.statusCode());
 
         DefaultSuccessResponse courier = responseCourier.then().extract().body().as(DefaultSuccessResponse.class);
         assertTrue(courier.isOk());
 
         // Логин курьера и получение его id
-        Response responseLogin = courierApi.loginCourier(login, password);
+        Response responseLogin = courierApi.loginCourier(LOGIN, PASSWORD);
         assertEquals(200, responseLogin.statusCode());
 
         CourierLoginResponse courierLoginResponse = responseLogin.then().extract().body().as(CourierLoginResponse.class);
@@ -84,15 +89,15 @@ public class OrderTest {
 
         // Создание заказа
         Response responseOrder = orderApi.createOrder(
-                firstName,
-                lastName,
-                address,
-                metroStation,
-                phone,
-                rentTime,
-                deliveryDate,
-                comment,
-                color
+                FIRST_NAME,
+                LAST_NAME,
+                ADDRESS,
+                METRO_STATION,
+                PHONE,
+                RENT_TIME,
+                DELIVERY_DATE,
+                COMMENT,
+                COLOR
         );
         assertEquals(201, responseOrder.statusCode());
 
@@ -120,7 +125,7 @@ public class OrderTest {
     void tearDown(TestInfo testInfo) {
         if (testInfo.getDisplayName().equals("testGetOrderList()")) {
             CourierLoginResponse loginResponse = courierApi
-                    .loginCourier(login, password)
+                    .loginCourier(LOGIN, PASSWORD)
                     .then().extract().body().as(CourierLoginResponse.class);
             Long courierId = loginResponse.getId();
 
