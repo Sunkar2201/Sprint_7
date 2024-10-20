@@ -36,7 +36,6 @@ public class CourierTest
     }
 
     @Test
-    @Step("Тест создания курьера.")
     @Description("Этот тест создает курьера.")
     public void testCreateCourier() {
         // Тест создания курьера.
@@ -48,7 +47,6 @@ public class CourierTest
     }
 
     @Test
-    @Step("Тест ошибки создания двух одинаковых курьеров.")
     @Description("Этот тест проверяет ошибку создания двух одинаковых курьеров.")
     public void testCreateTwoIdenticalCourier() {
         // Тест ошибки создания двух одинаковых курьеров.
@@ -68,7 +66,6 @@ public class CourierTest
     @DisplayName("Validating a POST /courier without a parameter")
     @ParameterizedTest(name = "{index}: login - ''{0}'' | password - ''{1}'' | firstName - ''{2}''.")
     @MethodSource("provideCourierParams")
-    @Step("Тест создания курьера без параметров.")
     @Description("Этот тест проверяет создание курьера без параметров.")
     public void testCreateCourierWithoutParams(String login, String password, String firstName) {
         Response response = courierApi.createCourier(login, password, firstName);
@@ -79,7 +76,6 @@ public class CourierTest
     }
 
     @Test
-    @Step("Тест авторизации курьера.")
     @Description("Этот тест проверяет авторизацию курьера.")
     public void testCourierLogin() {
         Response responseCourier = courierApi.createCourier(LOGIN, PASSWORD, FIRST_NAME);
@@ -98,7 +94,6 @@ public class CourierTest
     @DisplayName("Validating a POST /courier/login without a parameter")
     @ParameterizedTest(name = "{index}: login - ''{0}'' | password - ''{1}''.")
     @MethodSource("provideCourierParams")
-    @Step("Тест авторизации курьера без параметров.")
     @Description("Этот тест проверяет авторизацию курьера без параметров.")
     public void testLoginCourierWithoutParams(String login, String password) {
         Response responseCourier = courierApi.createCourier(CourierTest.LOGIN, CourierTest.PASSWORD, FIRST_NAME);
@@ -120,7 +115,6 @@ public class CourierTest
             CourierTest.LOGIN + ", 123456",
             "InvalidLogin , " + CourierTest.PASSWORD
     })
-    @Step("Тест авторизации с неверными полями.")
     @Description("Этот тест проверяет авторизацию курьера с неверными полями.")
     public void testInvalidLoginFields(String login, String password) {
         Response responseCourier = courierApi.createCourier(CourierTest.LOGIN, CourierTest.PASSWORD, FIRST_NAME);
@@ -137,7 +131,6 @@ public class CourierTest
     }
 
     @AfterEach
-    @Step("tearDown")
     public void tearDown() {
         Response response = courierApi.loginCourier(LOGIN, PASSWORD);
 

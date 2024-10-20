@@ -42,7 +42,6 @@ public class OrderTest {
             "GRAY",
             "BLACK and GRAY"
     })
-    @Step("Тест создания заказа с двумя цветами.")
     @Description("Этот тест проверяет создание заказа с двумя цветами.")
     @EmptySource
     public void testCreateOrderWithTwoColors(String colorElement) {
@@ -69,7 +68,6 @@ public class OrderTest {
     }
 
     @Test
-    @Step("Тест получения списка заказов.")
     @Description("Этот тест проверяет получение списка заказов.")
     public void testGetOrderList() {
         // Создание курьера
@@ -121,7 +119,6 @@ public class OrderTest {
     }
 
     @AfterEach
-    @Step("tearDown")
     void tearDown(TestInfo testInfo) {
         if (testInfo.getDisplayName().equals("testGetOrderList()")) {
             CourierLoginResponse loginResponse = courierApi

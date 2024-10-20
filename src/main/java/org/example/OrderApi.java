@@ -39,14 +39,14 @@ public class OrderApi extends BaseHttpClient {
         return doPostRequest(apiPath, request);
     }
 
-    @Step("Приемка заказа курьером")
+    @Step("Прием заказа курьером: id заказа - {orderId}, id курьера - {courierId}")
     public Response acceptOrder(Long orderId, Long courierId) {
         Map<String, Object> params = new HashMap<>();
         params.put("courierId", courierId);
         return doPutRequest(apiPath + "/accept/" + orderId, params);
     }
 
-    @Step("Получение всех заказов по id заказа")
+    @Step("Получение всех заказов курьера: id курьера - {courierId}")
     public Response getOrders(Long courierId) {
         Map<String, Object> params = new HashMap<>();
         params.put("courierId", courierId);
